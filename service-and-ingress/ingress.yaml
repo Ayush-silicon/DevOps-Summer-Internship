@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/group.name: service-group
+    alb.ingress.kubernetes.io/subnets: subnet-0274ffdb3b83b4c34,subnet-023d074e33397632f,subnet-04291f55a7f39eb2b
+spec:
+  ingressClassName: alb
+  rules:
+  - host: nginx.ingenious-techworld.xyz
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-service
+            port:
+              number: 80

@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "grafana-ingress"
+  namespace: "grafana"
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/group.name: service-group
+    alb.ingress.kubernetes.io/subnets: subnet-02dca753d2e741355,subnet-0bcc2295d59f16407,subnet-0e7364d5df493dcd2
+    app: grafana-ingress
+spec:
+  ingressClassName: alb
+  rules:
+    - http:
+          paths:
+            - path: /
+              pathType: Prefix
+              backend:
+                service:
+                  name: grafana
+                  port:
+                    number: 80
+          
+            
+                
